@@ -23,7 +23,18 @@ public:
 			}
 	}
 
-
+	void show_table()
+	{
+		int i,j;
+		for (i = 0; i < 3 ; ++i)
+		{
+			cout<<endl;
+			for (j = 0; j < 3 ; ++j)
+				cout<</*"i , j = "<<i<<" , "<<j<<" = "<<*/table[i][j]<<"  ";
+		}
+	cout<<endl;
+	}
+	
 };
 class table_search //making a tree and seaching in that to reach the goal state
 {
@@ -40,7 +51,7 @@ public:
 	state_table* actions()
 	{
 		int void_row, void_col;
-		int i,j;
+		int i=0,j=0;
 
 		table_list_vector.push_back(start_state);
 		
@@ -50,9 +61,14 @@ public:
 		while(1)
 		{
 		current_state = table_list_vector.front();
-		table_list_vector.erase(table_list_vector.begin());
-
-			if(current_state = goal_state)
+		cout<<"size: "<<table_list_vector.size()<<"\n";
+		cout<<"current_state\n";
+		current_state->show_table();
+		//cout<<"goal \n";
+		//goal_state->show_table();
+		char x;
+		cin>>x;
+			if(check_goal(current_state) == true)
 			{
 				cout<<"founded\n\n\n";
 				return goal_state;
@@ -68,34 +84,58 @@ public:
 					void_col = j;
 					i=2;j=2;
 				}
+		static int temp_row=void_row,
+		temp_col=void_col;
+		
 
-
-		temp = current_state;
 		if (void_col > 0)
 		{
-		switch (temp->table[i][void_col],temp->table[i][void_col -1]);
-		table_list_vector.push_back(temp);
-		}
 		temp = current_state;
+		void_col = temp_col;
+		void_row = temp_row;
+		switch_state (temp->table[void_row][void_col],temp->table[void_row][void_col -1]);
+			cout<<"***\n temp:1 \n";
+		temp->show_table();
+		table_list_vector.push_back(temp);
+	
+		}
+		
 		if (void_col < 2)
 		{
-		switch (temp->table[i][void_col],temp->table[i][void_col +1]);
-		table_list_vector.push_back(temp);
-		}
 		temp = current_state;
+		void_col = temp_col;
+		void_row = temp_row;
+		switch_state (temp->table[void_row][void_col],temp->table[void_row][void_col +1]);
+		table_list_vector.push_back(temp);
+					cout<<"***\n temp:2 \n";
+		temp->show_table();
+		}
+		
 		if (void_row > 0)
 		{
-		switch (temp->table[i][void_row],temp->table[i][void_row -1]);
-		table_list_vector.push_back(temp);
-		}
 		temp = current_state;
+		void_col = temp_col;
+		void_row = temp_row;
+		switch_state (temp->table[void_row][void_col],temp->table[void_row-1][void_col]);
+		table_list_vector.push_back(temp);
+					cout<<"***\n temp:3 \n";
+		temp->show_table();
+		}
+		
 		if (void_row < 2)
 		{
-		switch (temp->table[i][void_row],temp->table[i][void_row +1]);
+		temp = current_state;
+		void_col = temp_col;
+		void_row = temp_row;
+		switch_state (temp->table[void_row][void_col],temp->table[void_row+1][void_col]);
 		table_list_vector.push_back(temp);
+					cout<<"***\n temp:4 \n";
+		temp->show_table();
 		}
 
+		table_list_vector.erase(table_list_vector.begin());
 		}
+
 
 	}
 
@@ -112,21 +152,39 @@ public:
 	{
 		goal_state = new state_table;
 		start_state = new state_table;
-		int i,j,c;
+		int i,j,c=0;
 		cout<< "enter start state:\n";
 		for (i = 0; i < 3; ++i)
 			for (j = 0; j < 3 ; ++j)
 			{
 				cout<<"table["<<i<<"]["<<j<<"] :";
 				cin>>start_state->table[i][j];
-				start_state->table[i][j]=c;
+				goal_state->table[i][j]=c;
 				c++;
 			}
 	}
+
+
+	bool check_goal (state_table *current_state)
+	{
+		int i,j,c=0;
+		for (i = 0; i < 3 ; ++i)
+			for (j = 0; j < 3 ; ++j)
+			{
+				if(current_state->table[i][j] != c) return false;
+				c++;
+			}
+
+		return true;
+	}
 };
+
 
 int main() {
 	table_search puzzle_8;
+
+
+
 
 	puzzle_8.actions();
 
