@@ -25,7 +25,7 @@ public:
 ///////////	
 	state_table(state_table *state)
 	{  // tabeye sazandeye copy
-		int i,j,c=0;
+		int i,j;
 
 		for (i = 0; i < 3; ++i)
 			for (j = 0; j < 3 ; ++j)
@@ -122,7 +122,7 @@ public:
 		
 		if (void_col < 2)
 		{
-		temp = current_state;
+		temp =  new state_table(*current_state);
 		void_col = temp_col;
 		void_row = temp_row;
 		switch_state (temp->table[void_row][void_col],temp->table[void_row][void_col +1]);
@@ -133,7 +133,7 @@ public:
 		
 		if (void_row > 0)
 		{
-		temp = current_state;
+		temp =  new state_table(*current_state);
 		void_col = temp_col;
 		void_row = temp_row;
 		switch_state (temp->table[void_row][void_col],temp->table[void_row-1][void_col]);
@@ -144,8 +144,8 @@ public:
 		
 		if (void_row < 2)
 		{
-		temp = current_state;
-		void_col = temp_col;
+		temp =  new state_table(*current_state);
+ 		void_col = temp_col;
 		void_row = temp_row;
 		switch_state (temp->table[void_row][void_col],temp->table[void_row+1][void_col]);
 		table_list_vector.push_back(temp);
