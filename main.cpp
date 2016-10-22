@@ -22,7 +22,16 @@ public:
 				c++;
 			}
 	}
+///////////	
+	state_table(state_table *state)
+	{  // tabeye sazandeye copy
+		int i,j,c=0;
 
+		for (i = 0; i < 3; ++i)
+			for (j = 0; j < 3 ; ++j)
+				table[i][j]=state->table[i][j];
+	}
+///////////
 	void show_table()
 	{
 		int i,j;
@@ -46,7 +55,18 @@ public:
 
 
 
+	bool check_goal (state_table *current_state)
+	{
+		int i,j,c=0;
+		for (i = 0; i < 3 ; ++i)
+			for (j = 0; j < 3 ; ++j)
+			{
+				if(current_state->table[i][j] != c) return false;
+				c++;
+			}
 
+		return true;
+	}
 
 	state_table* actions()
 	{
@@ -55,7 +75,7 @@ public:
 
 		table_list_vector.push_back(start_state);
 		
-		state_table *temp = new state_table,*current_state;
+		state_table *temp,*current_state;
 
 
 		while(1)
@@ -90,7 +110,7 @@ public:
 
 		if (void_col > 0)
 		{
-		temp = current_state;
+		temp =  new state_table(*current_state);
 		void_col = temp_col;
 		void_row = temp_row;
 		switch_state (temp->table[void_row][void_col],temp->table[void_row][void_col -1]);
@@ -164,19 +184,6 @@ public:
 			}
 	}
 
-
-	bool check_goal (state_table *current_state)
-	{
-		int i,j,c=0;
-		for (i = 0; i < 3 ; ++i)
-			for (j = 0; j < 3 ; ++j)
-			{
-				if(current_state->table[i][j] != c) return false;
-				c++;
-			}
-
-		return true;
-	}
 };
 
 
