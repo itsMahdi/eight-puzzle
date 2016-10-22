@@ -104,9 +104,9 @@ public:
 					void_col = j;
 					i=2;j=2;
 				}
-		static int temp_row=void_row,
+		int temp_row,temp_col;
+		temp_row=void_row,
 		temp_col=void_col;
-		
 
 		if (void_col > 0)
 		{
