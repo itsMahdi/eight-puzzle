@@ -7,7 +7,7 @@ class state_node
 {
 private:
 	
-	int inedx[9];
+	int tile[9];
 	
 	state_node *LLink,*RLink; //for link list
 	
@@ -18,6 +18,8 @@ private:
 
 public:
 
+	void swap(int x,int y); // for going left right and.. in the puzzle (with void tile)
+
 	//constructor functions:
 	state_node(); //with no input
 	state_node(state_node *); // copy constructopr function
@@ -25,7 +27,7 @@ public:
 
 	//destructor function
 	~state_node(){
-		//delete[] inedx;      we should search about it!!
+		//delete[] tile;      we should search about it!!
 		delete LLink;
 		delete RLink;
 	    delete left;
@@ -36,12 +38,22 @@ public:
 	}
 };
 
+//swap function
+void state_node::swap(int x,int y)
+{
+	int temp=tile[x];
+	tile[x] = tile[y];
+	tile[y] = temp;
+
+
+}
+
 /// constructor functions ///
 state_node::state_node()
 {
 	for (int i = 0; i < 9; ++i)
 	{
-		inedx[i]=0;
+		tile[i]=0;
 	}
 	LLink=NULL;
 	RLink=NULL;
@@ -55,7 +67,7 @@ state_node::state_node(state_node *A)//copy constructor function
 {
 	for (int i = 0; i < 9; ++i)
 	{
-		inedx[i]=A->inedx[i];
+		tile[i]=A->tile[i];
 	}
 	LLink=NULL;
 	RLink=NULL;
@@ -69,15 +81,15 @@ state_node::state_node(int A[])
 {
 	for (int i = 0; i < 9; ++i)
 	{
-		inedx[i]=A[i];
+		tile[i]=A[i];
 	}
 	LLink=NULL;
 	RLink=NULL;
 	
-	    left=NULL;
-		right=NULL;
-		up=NULL;
-		down=NULL;
+    left=NULL;
+	right=NULL;
+	up=NULL;
+	down=NULL;
 }
 /// ******************** ///
 
