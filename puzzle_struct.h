@@ -5,6 +5,7 @@ using namespace std;
 
 class state_node
 {
+friend class Graph;
 private:
 	
 	int tile[9];
@@ -19,6 +20,13 @@ private:
 public:
 
 	void swap(int x,int y); // for going left right and.. in the puzzle (with void tile)
+	void put_to_RLink(state_node *in) {RLink = in;}
+	void put_to_LLink(state_node *in) {LLink = in;}
+	void show() {
+		for (int i = 0; i < 9; ++i)
+			cout<<tile[i]<<" ";
+		cout<<endl;
+	}
 
 	//constructor functions:
 	state_node(); //with no input
@@ -92,10 +100,3 @@ state_node::state_node(int A[])
 	down=NULL;
 }
 /// ******************** ///
-
-
-
-int main()
-{
-	return 0;
-}
