@@ -22,6 +22,15 @@ public:
 	void swap(int x,int y); // for going left right and.. in the puzzle (with void tile)
 	void put_to_RLink(state_node *in) {RLink = in;}
 	void put_to_LLink(state_node *in) {LLink = in;}
+	//return the location of void tile
+	int void_location(){
+		for (int i = 0; i < 9; ++i)
+		if(tile[i] == 0)
+			return i;
+
+		cout<<"\nERORR IN TILES!!!\n";
+		return 999;
+	}
 	void show() {
 		for (int i = 0; i < 9; ++i)
 			cout<<tile[i]<<" ";
