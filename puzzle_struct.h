@@ -9,6 +9,8 @@ friend class Graph;
 private:
 	
 	int tile[9];
+
+	int check;
 	
 	state_node *LLink,*RLink; //for link list
 	
@@ -72,6 +74,7 @@ state_node::state_node()
 	{
 		tile[i]=0;
 	}
+	check=0;
 	LLink=NULL;
 	RLink=NULL;
 	
@@ -88,7 +91,7 @@ state_node::state_node(state_node *A)//copy constructor function
 	}
 	LLink=NULL;
 	RLink=NULL;
-	
+	check=0;
 	    left=NULL;
 		right=NULL;
 		up=NULL;
@@ -102,7 +105,7 @@ state_node::state_node(int A[])
 	}
 	LLink=NULL;
 	RLink=NULL;
-	
+	check=0;
     left=NULL;
 	right=NULL;
 	up=NULL;
