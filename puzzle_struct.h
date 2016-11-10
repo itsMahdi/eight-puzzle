@@ -11,7 +11,8 @@ private:
 	int tile[9];
 
 	int check;
-	
+
+    state_node *parent_BFS;
 	state_node *LLink,*RLink; //for link list
 	
 	state_node  *left,
@@ -34,9 +35,14 @@ public:
 		return 999;
 	}
 	void show() {
+        cout<<endl;
 		for (int i = 0; i < 9; ++i)
+        {
 			cout<<tile[i]<<" ";
-		cout<<endl;
+            if (i==2||i==5)
+                cout<<endl;
+        }
+        cout<<endl<<"   ***     ***     ***"<<endl;
 	}
 
 	//constructor functions:
@@ -75,6 +81,7 @@ state_node::state_node()
 		tile[i]=0;
 	}
 	check=0;
+    parent_BFS=NULL;
 	LLink=NULL;
 	RLink=NULL;
 	
@@ -92,6 +99,7 @@ state_node::state_node(state_node *A)//copy constructor function
 	LLink=NULL;
 	RLink=NULL;
 	check=0;
+    parent_BFS=NULL;
 	    left=NULL;
 		right=NULL;
 		up=NULL;
@@ -106,6 +114,7 @@ state_node::state_node(int A[])
 	LLink=NULL;
 	RLink=NULL;
 	check=0;
+    parent_BFS=NULL;
     left=NULL;
 	right=NULL;
 	up=NULL;

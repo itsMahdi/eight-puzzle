@@ -7,6 +7,7 @@ you can use state in both of
 linked list and graph with RLink and LLink for linked list
 and LEFT RIGHT UP DOWN for graph
 */
+
 #include <iostream>
 #include "puzzle_struct.h"
 #include <vector>
@@ -41,67 +42,7 @@ public:
 	int go_find(state_node *,int [],int );
 
 	//search algouritms:
-	state_node* BFS_search(){
-
-		std::vector<state_node *> v;
-		int A[9];
-		for (int i = 0; i < 9; ++i)
-			cin>>A[i];
-
-		state_node *temp=first,*current_state;
-		while(temp)
-		{
-			if (temp->tile[0]== A[0] && temp->tile[1]== A[1] && temp->tile[2]== A[2] && 
-				temp->tile[3]== A[3] && temp->tile[4]== A[4] && temp->tile[5]== A[5] && 
-				temp->tile[6]== A[6] && temp->tile[7]== A[7] && temp->tile[8]== A[8] )
-			{
-				current_state=temp;
-				temp=NULL;
-				cout<<"founded";
-			}
-
-			temp=temp->RLink;
-		}
-
-
-		v.push_back(current_state);
-
-		while (v.size() == 0)
-		{
-			current_state = v.front();
-			current_state->check=1;
-			v.erase(v.begin());
-			int flag=0;
-			for (int i = 0; i < 9; ++i)
-				if (current_state->tile[i] == i)
-					{
-						flag++;
-					}
-
-			if(flag == 9)
-			{
-						cout<<"goal founded";
-					return current_state;
-				}
-			flag=0;
-			if(current_state->up != NULL && current_state->check==0)
-			v.push_back(current_state->up);
-
-			if(current_state->down != NULL && current_state->check==0)
-			v.push_back(current_state->down);
-
-			if(current_state->right != NULL && current_state->check==0)
-			v.push_back(current_state->right);
-
-			if(current_state->left != NULL && current_state->check==0)
-			v.push_back(current_state->left);
-
-
-		}
-
-	}
-
-
+    state_node* BFS_search();
 
 	// others needed functions:
 	void swap_number(int &a,int &b){
@@ -114,6 +55,46 @@ public:
 		A[x] = A[y];
 		A[y] = temp;
 	}
+
+    void mahdimahdi()
+    {
+
+        first->show();
+        first->right->show();
+        first->down->show();
+        cout<<"\n***\n";
+        for(int i=0;i<50;i++)
+        {
+            cout<<"\n*** *** *** \n";
+        state_node *temp = v_list.at(i+200000);
+        temp->show();
+        cout<<"hamsaye ha\n";
+        if(temp->right)
+        {
+        cout<<"right\n";
+        temp->right->show();
+        }
+        else cout<<"NULL right\n";
+        if(temp->down)
+        {
+        cout<<"down\n";
+        temp->down->show();
+        }
+        else cout<<"NULL DOWN\n";
+        if(temp->left)
+        {
+        cout<<"left\n";
+        temp->left->show();
+        }
+        else cout<<"NULL LEFT\n";
+        if(temp->up)
+        {
+        cout<<"up\n";
+        temp->up->show();
+        }
+        else cout<<"NULL UP\n";
+        }
+    }
 };
 
 
@@ -188,23 +169,19 @@ void Graph::make_graph() {
 		//cout<<"temp : ";
 		//temp->show();
 	//	cout<<endl;
-		void_loc = temp->void_location();
 
-		if (void_loc == 0)
+
+        void_loc = temp->void_location();
+        //if (void_loc == 0)
 		for (int i = 0; i < 9; ++i)
 			A[i] = B [i] = temp->tile[i];
 
 		switch (void_loc)
 		{
 			case 0:
-			//for (int i = 0; i < 9; ++i)
-			//	cout<<B[i]<<" ";
-			//cout<<endl;
+
 				swap_number(A[0],A[1]); //move void tile to right
 				swap_number(B[0],B[3]); //move voide tile to down
-		//		for (int j = 0; j < 9; j++)
-		//	cout<<B[j]<<" ";
-		//cout<<endl<<"ssssssssssss\n";
 				go_find(temp,A,0);
 				go_find(temp,B,1);
 				break;
@@ -231,7 +208,7 @@ void Graph::make_graph() {
 				go_find(temp,B,1);
 				break;
 			case 5:
-                swap_number(A[5],A[7]);
+                swap_number(A[5],A[8]);
 				go_find(temp,A,1);
 				break;
 			case 6:
@@ -258,26 +235,29 @@ void Graph::make_graph() {
 
 /// ******************** ///
 int Graph::go_find(state_node *current,int A[],int x){
-	state_node *temp = current;
+    state_node *temp=current;
+
+
     int rear,front,mid;
     front = v_list.size()-1;
     rear = 0;
-    while (front = rear) {
-        temp = v_list.at((front+rear)/ 2);
+
+    while (front >= rear) {
         mid = (front + rear) / 2;
+        temp = v_list.at(mid);
         if(A[0]==temp->tile[0] && A[1]==temp->tile[1] && A[2]==temp->tile[2]
             && A[3]==temp->tile[3] && A[4]==temp->tile[4] && A[5]==temp->tile[5]
             && A[6]==temp->tile[6] && A[7]==temp->tile[7] && A[8]==temp->tile[8] )
         {
                 if(x==0) //this means void tile goes right
                 {
-                    current->right = temp;
                     temp->left = current;
+                    current->right = temp;
                 }
                 else
                 {
-                    current->down = temp;
                     temp->up = current;
+                    current->down = temp;
                 }
         return 1;
         }
@@ -285,26 +265,22 @@ int Graph::go_find(state_node *current,int A[],int x){
 
         int flag;
         flag=0;
-        for (int i=0;i<9 && flag==0 ;i++)
+        for (int i=0;i<9;i++)
         {
-            if(A[i]!=temp->tile[i])
+            if(A[i]!=temp->tile[i] && flag == 0)
             {
                 if(A[i] < temp->tile[i])
-                    front = mid;
+                    front = mid-1;
                 else
-                    rear = mid;
+                    rear = mid+1;
                 flag =1;
             }
         }
 
     }
 
-
-    cout<<"ERRROOORRRRR\n";
-
-
-
-/*    while (temp)
+/*
+    while (temp)
 	{
 
 
@@ -329,11 +305,89 @@ int Graph::go_find(state_node *current,int A[],int x){
 			// bring down complexity
 
 
-	}
+    }
+*/
+    current->show();
+    cout<<" error in making graph check your code! mahdi\n";
 
-    */
 	return 0;
 }
+
+/// ************************************ ///
+
+state_node* Graph::BFS_search(){
+
+    std::vector<state_node *> v;
+    int A[9];
+    cout<<"enter puzzle: \n";
+    for (int i = 0; i < 9; ++i)
+        cin>>A[i];
+
+    state_node *temp=first,*current_state;
+    while(temp)
+    {
+        if (temp->tile[0]== A[0] && temp->tile[1]== A[1] && temp->tile[2]== A[2] &&
+            temp->tile[3]== A[3] && temp->tile[4]== A[4] && temp->tile[5]== A[5] &&
+            temp->tile[6]== A[6] && temp->tile[7]== A[7] && temp->tile[8]== A[8] )
+        {
+            current_state=temp;
+            temp=NULL;
+            cout<<"founded";
+        }
+    if(temp)
+        temp=temp->RLink;
+    }
+
+
+    v.push_back(current_state);
+
+    while (1)
+    {
+        current_state = v.front();
+        current_state->check=1;
+        v.erase(v.begin());
+        int flag=0;
+        for (int i = 0; i < 9; ++i)
+            if (current_state->tile[i] == i)
+                {
+                    flag++;
+                }
+
+        if(flag == 9)
+        {
+                    cout<<"goal founded";
+                    temp = current_state;
+                    while (temp) {
+                        temp->show();
+                        temp=temp->parent_BFS;
+                    }
+                return current_state;
+            }
+        flag=0;
+        if(current_state->up != NULL && current_state->up->check==0)
+        {
+        v.push_back(current_state->up);
+        current_state->up->parent_BFS=current_state;
+        }
+        if(current_state->down != NULL && current_state->down->check==0)
+        {
+        v.push_back(current_state->down);
+        current_state->down->parent_BFS=current_state;
+        }
+        if(current_state->right != NULL && current_state->right->check==0)
+        {
+        v.push_back(current_state->right);
+        current_state->right->parent_BFS=current_state;
+        }
+        if(current_state->left != NULL && current_state->left->check==0)
+        {
+        v.push_back(current_state->left);
+        current_state->left->parent_BFS=current_state;
+        }
+    }
+
+}
+
 
 
 

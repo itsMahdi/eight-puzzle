@@ -3,19 +3,21 @@
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
+int main() {
 
     Graph test;
 
     test.make_list();
-    cout<<"saaaaaaaaaaaaaaalam";
+    cout<<"make graph";
     //test.show_link_list();
     cout<<"start";
     test.make_graph();
     cout<<"payan";
-    int a;
-    cin>>a;
-   // test.BFS_search();
+    //int a;
+    //cin>>a;
+
+   // test.mahdimahdi();
+    test.BFS_search();
     cout<<"bye bye";
     return 0;
 }
