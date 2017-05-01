@@ -2,7 +2,6 @@
 8 puzzle algourithm
 
 a BFS tree for searching the goal state in 8 puzzle
-
-this is an AI class homwork for my class!
+its find best way to resolve the puzzle.
 
 be Happy :)
